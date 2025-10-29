@@ -1,34 +1,21 @@
-const myImage = document.querySelector("img");
+const list = document.createElement('ul');
+const info = document.createElement('p');
+const html = document.querySelector('html');
 
-myImage.onclick = () => {
-  const mySrc = myImage.getAttribute("src");
-  if (mySrc === "https://images.icon-icons.com/2415/PNG/512/firefox_original_wordmark_logo_icon_146524.png") {
-    myImage.setAttribute("src", "https://img.doooor.com/img/forum/201110/16/224348ssv14w1idnyy11bi.png");
-  } else {
-    myImage.setAttribute("src", "https://images.icon-icons.com/2415/PNG/512/firefox_original_wordmark_logo_icon_146524.png");
+info.textContent = 'Below is a dynamic list. Click anywhere on the page to add a new list item. Click an existing list item to change its text to something else.';
+
+document.body.appendChild(info);
+document.body.appendChild(list);
+
+html.onclick = function() {
+  const listItem = document.createElement('li');
+  const listContent = prompt('What content do you want the list item to have?');
+  listItem.textContent = listContent;
+  list.appendChild(listItem);
+
+  listItem.onclick = function(e) {
+    e.stopPropagation();
+    const listContent = prompt('Enter new content for your list item');
+    this.textContent = listContent;
   }
-};
-
-let myButton = document.querySelector("button");
-let myHeading = document.querySelector("h1");
-
-function setUserName() {
-  const myName = prompt("Please enter your name.");
-  if (!myName) {
-    setUserName();
-  } else {
-    localStorage.setItem("name", myName);
-    myHeading.textContent = `Mozilla is cool, ${myName}`;
-  }
-}
-
-myButton.onclick = function () {
-  setUserName();
-};
-
-if (!localStorage.getItem("name")) {
-  setUserName();
-} else {
-  const storedName = localStorage.getItem("name");
-  myHeading.textContent = `Mozilla is cool, ${storedName}`;
 }
